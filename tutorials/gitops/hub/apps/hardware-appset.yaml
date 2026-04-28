@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: hardware-lifecycle
+  namespace: openshift-gitops
+spec:
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - stage: planned
+                - stage: validating
+                - stage: available
+          - git:
+              repoURL: https://github.com/axodevelopment/ztp-inventory-mgmt
+              revision: main
+              directories:
+                - path: "tutorials/gitops/hosts/{{.stage}}/*"
+  template:
+    metadata:
+      name: "{{.stage}}-{{.path.basename}}"
+      labels:
+        hardware.lifecycle/stage: "{{.stage}}"
+        hardware.lifecycle/host: "{{.path.basename}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/axodevelopment/ztp-inventory-mgmt
+        targetRevision: main
+        path: "{{.path.path}}"
+        directory:
+          recurse: false
+          include: '{*-bmh.yaml,*-hfs.yaml,*-hfc.yaml,*-secret.yaml}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: openshift-machine-api
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=false
+          - RespectIgnoreDifferences=true
+      ignoreDifferences:
+        - group: metal3.io
+          kind: BareMetalHost
+          jsonPointers:
+            - /metadata/annotations/inspect.metal3.io~1hardwaredetails
+            - /status
+            - /metadata/ownerReferences
+        - group: metal3.io
+          kind: HostFirmwareSettings
+          jsonPointers:
+            - /status
+        - group: metal3.io
+          kind: HostFirmwareComponents
+          jsonPointers:
+            - /status

@@ -1,0 +1,26 @@
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: dell-r640-dfwa-rack10-u1
+  namespace: openshift-machine-api
+  labels:
+    hardware.lifecycle/stage: planned
+    hardware.lifecycle/model: dell-r640
+    hardware.lifecycle/site: dfwa
+    hardware.lifecycle/rack: rack10
+    hardware.lifecycle/unit: u1
+  annotations:
+    inspect.metal3.io: disabled
+spec:
+  online: false
+
+  bootMACAddress: "4c:d9:8f:26:6e:3c"
+  bootMode: UEFI
+
+  bmc:
+    address: "redfish-virtualmedia+https://192.168.31.11/redfish/v1/Systems/System.Embedded.1"
+    credentialsName: dell-r640-dfwa-rack10-u1-bmc-secret
+    disableCertificateVerification: true
+
+  rootDeviceHints:
+    deviceName: /dev/sdb
