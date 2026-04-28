@@ -2,17 +2,21 @@ apiVersion: metal3.io/v1alpha1
 kind: BareMetalHost
 metadata:
   name: dell-r640-dfwa-rack10-u1
-  namespace: openshift-machine-api
+  namespace: my-home
   labels:
     hardware.lifecycle/stage: validating
     hardware.lifecycle/model: dell-r640
     hardware.lifecycle/rack: rack10
     hardware.lifecycle/unit: u1
     hardware.target: master
+    infraenvs.agent-install.openshift.io: my-home
   annotations:
     inspect.metal3.io: enabled
+    bmac.agent-install.openshift.io/hostname: 
 spec:
   online: true
+
+  automatedCleaningMode: disabled
 
   bootMACAddress: "4c:d9:8f:26:6e:3c"
   bootMode: UEFI
@@ -21,6 +25,3 @@ spec:
     address: "redfish-virtualmedia+https://192.168.31.11/redfish/v1/Systems/System.Embedded.1"
     credentialsName: dell-r640-dfwa-rack10-u1-bmc-secret
     disableCertificateVerification: true
-
-  rootDeviceHints:
-    deviceName: /dev/sdb
