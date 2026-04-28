@@ -1,0 +1,9 @@
+apiVersion: metal3.io/v1alpha1
+kind: HostFirmwareSettings
+metadata:
+  name: dell-r640-dfwa-rack10-u1
+  namespace: my-home
+spec:
+  settings:
+    SriovGlobalEnable: "Disabled"
+    ProcVirtualization: "Enabled"

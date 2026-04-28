@@ -4,4 +4,4 @@ metadata:
   name: provisioning-configuration
 spec:
   provisioningNetwork: Disabled
-  watchAllNamespaces: false
+  watchAllNamespaces: true
