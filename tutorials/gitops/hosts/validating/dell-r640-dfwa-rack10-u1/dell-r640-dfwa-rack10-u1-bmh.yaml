@@ -12,7 +12,7 @@ metadata:
     infraenvs.agent-install.openshift.io: my-home
   annotations:
     inspect.metal3.io: enabled
-    bmac.agent-install.openshift.io/hostname: 
+    #bmac.agent-install.openshift.io/hostname: 
 spec:
   online: true
 
