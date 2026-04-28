@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/axodevelopment/ztp-inventory-mgmt
     targetRevision: main
-    path: tutorials/gitops/hub/applications/
+    path: tutorials/gitops/hub/apps/
   destination:
     server: https://kubernetes.default.svc
     namespace: openshift-gitops
