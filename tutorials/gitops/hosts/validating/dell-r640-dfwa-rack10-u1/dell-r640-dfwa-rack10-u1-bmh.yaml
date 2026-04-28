@@ -11,8 +11,7 @@ metadata:
     hardware.target: master
     infraenvs.agent-install.openshift.io: my-home
   annotations:
-    inspect.metal3.io: enabled
-    #bmac.agent-install.openshift.io/hostname: 
+    inspect.metal3.io: ""
 spec:
   online: true
 
@@ -25,3 +24,6 @@ spec:
     address: "redfish-virtualmedia+https://192.168.31.11/redfish/v1/Systems/System.Embedded.1"
     credentialsName: dell-r640-dfwa-rack10-u1-bmc-secret
     disableCertificateVerification: true
+
+  
+    #annotations.bmac.agent-install.openshift.io/hostname: 
